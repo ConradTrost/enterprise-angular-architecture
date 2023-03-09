@@ -1,0 +1,117 @@
+{
+  "name": "recipes",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/recipes/src",
+  "prefix": "enterprise-angular-architecture",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:webpack-browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/recipes",
+        "index": "apps/recipes/src/index.html",
+        "main": "apps/recipes/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/recipes/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": ["apps/recipes/src/favicon.ico", "apps/recipes/src/assets"],
+        "styles": ["apps/recipes/src/styles.scss"],
+        "scripts": [],
+        "customWebpackConfig": {
+          "path": "apps/recipes/webpack.config.js"
+        }
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all",
+          "customWebpackConfig": {
+            "path": "apps/recipes/webpack.prod.config.js"
+          }
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@nrwl/angular:webpack-dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "recipes:build:production"
+        },
+        "development": {
+          "browserTarget": "recipes:build:development"
+        }
+      },
+      "defaultConfiguration": "development",
+      "options": {
+        "port": 4300,
+        "proxyConfig": "apps/recipes/proxy.conf.json",
+        "publicHost": "http://localhost:4300"
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "recipes:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/recipes/**/*.ts", "apps/recipes/**/*.html"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/recipes/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "serve-static": {
+      "executor": "@nrwl/angular:file-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "recipes:build",
+        "port": 4300
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "recipes:build:development"
+        },
+        "production": {
+          "buildTarget": "recipes:build:production"
+        }
+      }
+    }
+  },
+  "tags": ["scope:recipes"]
+}
