@@ -14,7 +14,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@enterprise-angular-architecture/recipes-api/recipes": [
+        "libs/recipes-api/recipes/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
