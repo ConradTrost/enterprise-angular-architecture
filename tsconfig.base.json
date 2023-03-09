@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@eaa/recipes/feature/search": [
+        "libs/recipes/feature/search/src/index.ts"
+      ],
       "@enterprise-angular-architecture/recipes-api/recipes": [
         "libs/recipes-api/recipes/src/index.ts"
       ]
